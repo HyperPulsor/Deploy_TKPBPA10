@@ -20,7 +20,6 @@ def donasi_barang(request):
 def index(request):
     return render(request, 'index.html')
 
-@csrf_exempt
 def registerbuyer(request):
     msg = None
     if request.method == 'POST':
@@ -35,7 +34,6 @@ def registerbuyer(request):
         form = SignUpBuyerForm()
     return render(request,'registerbuyer.html', {'form': form, 'msg': msg})
 
-@csrf_exempt
 def registerseller(request):
     msg = None
     if request.method == 'POST':
@@ -50,7 +48,6 @@ def registerseller(request):
         form = SignUpSellerForm()
     return render(request,'registerseller.html', {'form': form, 'msg': msg})
 
-@csrf_exempt
 def login_view(request):
     form = LoginForm(request.POST or None)
     msg = None
