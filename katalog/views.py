@@ -29,7 +29,7 @@ def show_toko_html_1(request, nama, deskripsi):
     }
     return render(request, "toko.html", context)
 
-@login_required(login_url='/index/')
+# @login_required(login_url='/index/')
 def show_toko_json(request):
     toko_item = User.objects.filter(is_seller=True)
     return HttpResponse(serializers.serialize("json", toko_item), content_type="application/json")
