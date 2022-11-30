@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.core import serializers
 from addkategori.models import Kategori
 
 # import form
@@ -43,3 +45,7 @@ def delete_kategori(request, id):
     deletekategori = Kategori.objects.get(pk=id)
     deletekategori.delete()
     return redirect('kategori:show_kategori')
+
+def show_json(request):
+    data = Kategori.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")

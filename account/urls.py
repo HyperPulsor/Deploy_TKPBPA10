@@ -12,5 +12,6 @@ urlpatterns = [
     path('buyer/', views.buyer, name='buyer'),
     path('seller/', views.seller, name='seller'),
     path('logout/', views.logout_user, name='logout'),
-    path('donasi_barang/', views.donasi_barang, name='donasi_barang')
+    path('donasi_barang/', views.donasi_barang, name='donasi_barang'),
+    path('json/', views.show_json, name='show_json'),
 ]
