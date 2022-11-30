@@ -5,6 +5,9 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.core import serializers
 from django.contrib.auth.decorators import login_required,permission_required
 from account.models import User
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
 
 @login_required(login_url='/account/login/')
 def show_json(request,kategori_inputuser):
@@ -156,7 +159,39 @@ def add_forum(request):
         forum.save()
         return redirect('/forum/semua')
     return HttpResponseNotFound()
-    
+
+#processing penambahan forum
+@csrf_exempt
+def add_forum_flutter(request, id):
+    if request.method == 'POST':
+        newForum = json.loads(request.body)
+
+        title=newForum['title']
+        discussion = newForum['discussion']
+        user = User.objects.get(user=newForum['id'])
+        username = user.username
+        kategori = "semua"
+
+        newForum = ForumUMKM(title=title, discussion=discussion, user=user, kategori=kategori, username = username)
+        newForum.save();
+        return JsonResponse({"instance": "Forum Berhasil Dibuat!"}, status=200)
+
+
+@csrf_exempt
+def add_reply_flutter(request, id):
+    if request.method == 'POST':
+        newReply = json.loads(request.body)
+
+        discussion = newReply['discussion']
+        user = User.objects.get(id=newReply['id'])
+        username = user.username
+        forum = ForumUMKM.objects.get(id=newReply['forum_pk'])
+        #cara akses forum?
+
+        newReply = Replies(discussion=discussion, user=user, username = username,forum=forum)
+        newReply.save();
+        return JsonResponse({"instance": "Reply Berhasil Dibuat!"}, status=200)
+
 def add_reply(request):
     if request.method == "POST":
         print(request.POST)
