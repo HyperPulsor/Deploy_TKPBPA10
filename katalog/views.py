@@ -22,13 +22,17 @@ def show_toko_html_1(request, nama, deskripsi):
         tokos.append(dict)
 
     context = {
-        # 'kategori' : request.kategori_nama, -> ambil dr req but how
         'tokos': tokos,
         'list_toko' : toko_item,
         'kategori' : nama,
         'deskripsi': deskripsi,
     }
     return render(request, "toko.html", context)
+
+# @login_required(login_url='/index/')
+def show_toko_json(request):
+    toko_item = User.objects.filter(is_seller=True)
+    return HttpResponse(serializers.serialize("json", toko_item), content_type="application/json")
 
 @login_required(login_url='/index/')
 def show_produk_html_1(request, id):

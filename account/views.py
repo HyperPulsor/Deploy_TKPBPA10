@@ -7,6 +7,8 @@ import json
 from addkategori.models import Kategori
 from adminfaq.models import Faq
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+from django.core import serializers
 
 # Create your views here.
 
@@ -95,3 +97,7 @@ def seller(request):
 def logout_user(request):
     logout(request)
     return redirect('account:index')
+
+def show_json(request):
+    data = Kategori.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
