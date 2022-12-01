@@ -9,59 +9,19 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 
+def show_json_flutter(request):
+    data = ForumUMKM.objects.all().order_by('-time')
+    print(data)
+    return HttpResponse(serializers.serialize("json", data))
+
 @login_required(login_url='/account/login/')
 def show_json(request,kategori_inputuser):
     if kategori_inputuser == "semua":
         data = ForumUMKM.objects.all().order_by('-time')
         return HttpResponse(serializers.serialize("json", data))
 
-    elif kategori_inputuser == "makanan":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "pakaian":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "perlengkapan":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "otomotif":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "alat":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "kesehatan":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "kecantikan":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "musik":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "gadget":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "aksesoris":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "footwear":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
-
-    elif kategori_inputuser == "tas":
-        data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
-        return HttpResponse(serializers.serialize("json", data))
+    data = ForumUMKM.objects.filter(kategori=kategori_inputuser).order_by('-time')
+    return HttpResponse(serializers.serialize("json", data))
 
 def main(request,kategori_inputuser):
     data = ""
