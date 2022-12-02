@@ -14,6 +14,11 @@ def show_json_flutter(request):
     print(data)
     return HttpResponse(serializers.serialize("json", data))
 
+def show_json_reply_flutter(request,forum_id):
+    this_forum = ForumUMKM.objects.filter(id=forum_id).first()
+    data = Replies.objects.filter(forum=this_forum)
+    return HttpResponse(serializers.serialize("json", data))
+
 @login_required(login_url='/account/login/')
 def show_json(request,kategori_inputuser):
     if kategori_inputuser == "semua":
