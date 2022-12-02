@@ -14,4 +14,10 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('donasi_barang/', views.donasi_barang, name='donasi_barang'),
     path('json/', views.show_json, name='show_json'),
+    path('login_flutter/', views.login_flutter, name='login_flutter'),
+    path('signup_flutter/', views.signup_flutter, name='signup_flutter'),
+    path('logout_flutter/', views.logout_flutter, name='logout_flutter'),
+    path('user/', views.get_user, name='user'),
+    path('all_profile_json/', views.all_profile_json, name='all_profile_json'),
+    path('profile_json/', views.profile_json, name='profile_json'),
 ]
