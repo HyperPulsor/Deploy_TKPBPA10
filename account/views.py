@@ -157,6 +157,10 @@ def get_user(request):
 	user = User.objects.get(username=user)
 	return JsonResponse({"data": {"email": user.email, "username": user.username}}, status=200)
 
+def all_profile_json(request):
+    data = User.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
 def profile_json(request):
     user = request.user
     data = User.objects.filter(username=user)
