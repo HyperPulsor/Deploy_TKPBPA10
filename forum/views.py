@@ -128,7 +128,7 @@ def add_forum_flutter(request, id):
 
         title=newForum['title']
         discussion = newForum['discussion']
-        user = User.objects.get(user=newForum['id'])
+        user = User.objects.get(id=newForum['id'])
         username = user.username
         kategori = "semua"
 
