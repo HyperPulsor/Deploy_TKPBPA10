@@ -159,5 +159,5 @@ def get_user(request):
 
 def profile_json(request):
     user = request.user
-    data = User.objects.get(user)
+    data = User.objects.filter(username=user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
