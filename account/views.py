@@ -9,6 +9,7 @@ from adminfaq.models import Faq
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.core import serializers
+import logging
 
 # Create your views here.
 
@@ -96,6 +97,7 @@ def seller(request):
 
 def logout_user(request):
     logout(request)
+    
     return redirect('account:index')
 
 def show_json(request):
@@ -104,40 +106,43 @@ def show_json(request):
 
 @csrf_exempt
 def login_flutter(request):
-	context = {}
-	user = request.user
-	
-	if request.method == "POST":
-		data = json.loads(request.body)
-		email = data['email']
-		password = data['password']
-		user = authenticate(request, email=email, password=password)
-		if user:
-			login(request, user)
-			context['login'] = "logged-in"
-			context['user'] = {"email": user.email, "username": user.username}
-			return JsonResponse({'data': context}, status=200)
-
-	context['login'] = 'unlogin'
-	return JsonResponse({'data': context}, status=500)
-
+    context = {}
+    user = request.user
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data)
+        username = data['username']
+        password = data['password']
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user:
+            login(request, user)
+            context['login'] = "logged-in"
+            context['user'] = {"username": user.username}
+            return JsonResponse({'data': context}, status=200)
+    context['login'] = 'unlogin'
+    return JsonResponse({'data': context}, status=500)
 
 @csrf_exempt
 def signup_flutter(request):
-	if request.method == 'POST':
-		data = json.loads(request.body)
-		email = data['email']
-		username = data['username']
-		password = data['password']
-		
-		try:
-			new_user = User.objects.create_user(email, username, password)
-			new_user.save()
-			return JsonResponse({"instance": "user Dibuat"}, status=200)
-		except:
-			return JsonResponse({"instance": "gagal Dibuat"}, status=400)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+        email = data['email']
+        username = data['username']
+        password = data['password']
 
-	return JsonResponse({"instance": "gagal Dibuat"}, status=400)
+        try:
+            new_user = User.objects.create_user(username, email, password)
+            if (data['jenisuser'] == "Daftar Buyer"):
+                new_user.is_buyer = True
+            else:
+                new_user.is_seller = True
+            new_user.save()
+            return JsonResponse({"instance": "user Dibuat"}, status=200)
+        except:
+            return JsonResponse({"instance": "gagal Dibuat"}, status=400)
+    return JsonResponse({"instance": "gagal Dibuat"}, status=400)
 
 @csrf_exempt
 def logout_flutter(request):
