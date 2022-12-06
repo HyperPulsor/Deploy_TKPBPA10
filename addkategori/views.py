@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
@@ -11,6 +12,10 @@ from django.shortcuts import redirect
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
+
 # Create your views here.
 
 def show_kategori(request):
@@ -23,7 +28,7 @@ def show_kategori(request):
         }
     return render(request, "main.html", context)
 
-#@csrf_exempt
+# @csrf_exempt
 def create_kategori(request):
     if request.method == "POST":
         user = request.user
@@ -41,6 +46,18 @@ def create_kategori(request):
             messages.error(request, "Nama dan Deskripsi Kategori Harus Diisi")
     return render(request, 'create_kategori.html')
 
+@csrf_exempt
+def create_kategori_flutter(request, id):
+    if request.method == 'POST':
+        newKategori = json.loads(request.body)
+
+        nama = newKategori['title']
+        deskripsi = newKategori['deskripsi']
+
+        newKategori = Kategori(nama=nama, deskripsi=deskripsi)
+        newKategori.save();
+        return JsonResponse({"instance": "Kategori Berhasil Dibuat!"}, status=200)
+        
 def delete_kategori(request, id):
     deletekategori = Kategori.objects.get(pk=id)
     deletekategori.delete()
