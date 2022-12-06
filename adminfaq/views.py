@@ -44,14 +44,12 @@ def create_faq(request):
 def create_faq_flutter(request):
     if request.method == "POST":
         form = FormFaq(request.POST)
-        if form.is_valid():
-            form = Faq()
-            form.user = request.user
-            form.question = request.POST.get('question')
-            form.answer = request.POST.get('answer')
-            form.save()
-            return JsonResponse({"status" : "oke"}, status = 200)
-    else:
+        form = Faq()
+        form.user = request.user
+        form.question = request.POST.get('question')
+        form.answer = request.POST.get('answer')
+        form.save()
+        return JsonResponse({"status" : "oke"}, status = 200)
         form = FormFaq()
     return JsonResponse({"instance": "FAQ Ditambahkan"},status=200)
     
