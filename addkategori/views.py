@@ -53,8 +53,9 @@ def create_kategori_flutter(request):
 
         nama = newKategori['nama']
         deskripsi = newKategori['deskripsi']
+        file_url = newKategori['file_url']
 
-        newKategori = Kategori(nama=nama, deskripsi=deskripsi)
+        newKategori = Kategori(nama=nama, deskripsi=deskripsi, file_url=file_url)
         newKategori.save();
         return JsonResponse({"instance": "Kategori Berhasil Dibuat!"}, status=200)
         
