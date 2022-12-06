@@ -47,7 +47,7 @@ def create_kategori(request):
     return render(request, 'create_kategori.html')
 
 @csrf_exempt
-def create_kategori_flutter(request, id):
+def create_kategori_flutter(request):
     if request.method == 'POST':
         newKategori = json.loads(request.body)
 
