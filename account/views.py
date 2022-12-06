@@ -116,6 +116,7 @@ def login_flutter(request):
         user = authenticate(request, username=username, password=password)
         print(user)
         if user:
+            print("nice")
             login(request, user)
             context['login'] = "logged-in"
             context['user'] = {"username": user.username}
