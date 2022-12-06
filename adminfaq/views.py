@@ -40,6 +40,7 @@ def create_faq(request):
     # return render(request, 'faq.html', context)
     return JsonResponse({"instance": "FAQ Ditambahkan"},status=200)
 
+@csrf_exempt
 def create_faq_flutter(request):
     if request.method == "POST":
         form = FormFaq(request.POST)
