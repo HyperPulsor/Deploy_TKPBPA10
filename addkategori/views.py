@@ -51,7 +51,7 @@ def create_kategori_flutter(request, id):
     if request.method == 'POST':
         newKategori = json.loads(request.body)
 
-        nama = newKategori['title']
+        nama = newKategori['nama']
         deskripsi = newKategori['deskripsi']
 
         newKategori = Kategori(nama=nama, deskripsi=deskripsi)
