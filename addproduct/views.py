@@ -23,6 +23,9 @@ def show_json(request):
     data = Product.objects.filter(is_valid=True)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+def show_json_all(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_product(request):
     form = AddProductForm() 
