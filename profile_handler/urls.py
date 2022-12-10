@@ -14,4 +14,5 @@ urlpatterns = [
     path('edit/seller/', SellerEditView.as_view(), name='editseller'),
     path('edit/password/', PasswordsChangeView.as_view(template_name='change-password.html')),
     path('password_success', password_success, name='password_success'),
+    path('edit_profile/<username>', edit_profile, name='edit_profile'),
 ]
