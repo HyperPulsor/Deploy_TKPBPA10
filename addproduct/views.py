@@ -70,10 +70,14 @@ def delete_product(request, id):
     product.delete()
     return redirect('addproduct:show_product')
 
-
-
-
-
-
-
-
+def create_product_flutter(request):
+    if request.method == 'POST':
+        form = AddProductForm(request.POST,request.FILES)
+        if form.is_valid:
+            form.instance.user = request.user
+            form.instance.is_valid = False
+            form.save()
+            return JsonResponse({"status": "aman"}, status = 200)
+    else:
+        form = AddProductForm()
+    return JsonResponse({"instance": "Product ditambahkan"}, status = 200)
