@@ -20,4 +20,5 @@ urlpatterns = [
     path('user/', views.get_user, name='user'),
     path('all_profile_json/', views.all_profile_json, name='all_profile_json'),
     path('profile_json/', views.profile_json, name='profile_json'),
+    path('json/<username>', views.show_json_by_username, name='show_json_by_username'),
 ]
