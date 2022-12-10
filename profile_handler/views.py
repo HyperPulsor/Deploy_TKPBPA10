@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
@@ -6,6 +7,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 from account.forms import *
 from .forms import *
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
 
 @login_required(login_url='/account/login/')
 def show_profile(request):
@@ -44,3 +47,15 @@ class PasswordsChangeView(PasswordChangeView):
 
 def password_success(request):
     return render(request, 'password-success.html', {})
+
+@csrf_exempt
+def edit_profile(request, id):
+    if request.method == 'POST':
+        newForum = json.loads(request.body)
+
+        username=request.user.username
+        email=request.user.email
+
+        newForum = User(username=username, email=email)
+        newForum.save();
+        return JsonResponse({"instance":"Berhasil memperbarui data"}, status=200)
