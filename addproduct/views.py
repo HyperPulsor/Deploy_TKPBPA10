@@ -70,6 +70,7 @@ def delete_product(request, id):
     product.delete()
     return redirect('addproduct:show_product')
 
+@csrf_exempt
 def create_product_flutter(request):
     if request.method == 'POST':
         form = AddProductForm(request.POST,request.FILES)
@@ -80,4 +81,14 @@ def create_product_flutter(request):
             return JsonResponse({"status": "aman"}, status = 200)
     else:
         form = AddProductForm()
+    return JsonResponse({"instance": "Product ditambahkan"}, status = 200)
+
+@csrf_exempt
+def create_product_flutter2(request):
+    if request.method == 'POST':
+        form = json.loads(request.body)
+        form.instance.user = request.user
+        form.instance.is_valid = False
+        form.save()
+        return JsonResponse({"status": "aman"}, status = 200)
     return JsonResponse({"instance": "Product ditambahkan"}, status = 200)
