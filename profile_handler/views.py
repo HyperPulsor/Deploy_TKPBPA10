@@ -48,14 +48,46 @@ class PasswordsChangeView(PasswordChangeView):
 def password_success(request):
     return render(request, 'password-success.html', {})
 
+# @csrf_exempt
+# def edit_profile(request, id):
+#     if request.method == 'POST':
+#         newForum = json.loads(request.body)
+
+#         username=request.username
+#         email=request.email
+
+#         newForum = User(username=username, email=email)
+#         newForum.save();
+#         return JsonResponse({"instance":"Berhasil memperbarui data"}, status=200)
+
 @csrf_exempt
-def edit_profile(request, id):
+def edit_profile(request):
     if request.method == 'POST':
-        newForum = json.loads(request.body)
+        data = json.loads(request.body.decode('utf-8'))
+        username = data['username']  
+        email = data['email']  
 
-        username=request.user.username
-        email=request.user.email
+        if username and email:
+            user = User.objects.get(username = username)
+            u_form = BuyerEditProfileForm(request.POST or None, instance=user)
+            # p_form = ProfileUpdateForm(request.POST or None,
+            #                             request.FILES or None,
+            #                             instance=profile)
+            tmp_uform = u_form.save(commit = False)
+            # tmp_pform = p_form.save(commit = False)
 
-        newForum = User(username=username, email=email)
-        newForum.save();
-        return JsonResponse({"instance":"Berhasil memperbarui data"}, status=200)
+            tmp_uform.username = username
+            tmp_uform.email = email
+            # tmp_pform.bio = bio
+
+            # tmp_pform.save()
+            tmp_uform.save()
+
+            response = {
+                'msg':  'Update profil Anda berhasil disimpan!',
+                'id' : 1,
+                'status': 'success'
+            }
+        
+    else:
+        return JsonResponse({"status": "error"})
