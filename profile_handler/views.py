@@ -88,6 +88,6 @@ def edit_profile(request):
                 'id' : 1,
                 'status': 'success'
             }
-        
+        return JsonResponse(response)
     else:
         return JsonResponse({"status": "error"})
