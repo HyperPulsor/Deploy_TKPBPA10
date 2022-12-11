@@ -16,6 +16,7 @@ urlpatterns = [
     path('jsonall/', views.show_json_all, name="show_json_all"),
     path('/create_product_flutter/', views.create_product_flutter, name="create_product_flutter"),
     path('/create_product_flutter2/', views.create_product_flutter2, name="create_product_flutter2"),
+    path('/show_json_kategori/<kategori_id>/', views.show_json_kategori, name="show_json_kategori"),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

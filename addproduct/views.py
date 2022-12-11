@@ -17,7 +17,12 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 import json
 
+from addkategori.models import Kategori
 
+def show_json_kategori(request, kategori_id):
+    this_kategori = Kategori.objects.filter(nama=kategori_id).first()
+    data = Product.objects.filter(kategori_produk=this_kategori)
+    return HttpResponse(serializers.serialize("json", data))
 
 def show_json(request):
     data = Product.objects.filter(is_valid=True)
