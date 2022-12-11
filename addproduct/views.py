@@ -20,8 +20,8 @@ import json
 from addkategori.models import Kategori
 
 def show_json_kategori(request, kategori_id):
-    this_kategori = Product.objects.filter(id=kategori_id).first()
-    data = Kategori.objects.filter(nama=this_kategori)
+    this_kategori = Kategori.objects.filter(nama=kategori_id).first()
+    data = Product.objects.filter(kategori_produk=this_kategori)
     return HttpResponse(serializers.serialize("json", data))
 
 def show_json(request):
