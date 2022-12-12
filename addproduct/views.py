@@ -17,12 +17,20 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 import json
 
+from addkategori.models import Kategori
 
+def show_json_kategori(request, kategori_id):
+    this_kategori = Kategori.objects.filter(nama=kategori_id).first()
+    data = Product.objects.filter(kategori_produk=this_kategori)
+    return HttpResponse(serializers.serialize("json", data))
 
 def show_json(request):
     data = Product.objects.filter(is_valid=True)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+def show_json_all(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_product(request):
     form = AddProductForm() 
@@ -67,10 +75,25 @@ def delete_product(request, id):
     product.delete()
     return redirect('addproduct:show_product')
 
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        form = AddProductForm(request.POST,request.FILES)
+        if form.is_valid:
+            form.instance.user = request.user
+            form.instance.is_valid = False
+            form.save()
+            return JsonResponse({"status": "aman"}, status = 200)
+    else:
+        form = AddProductForm()
+    return JsonResponse({"instance": "Product ditambahkan"}, status = 200)
 
-
-
-
-
-
-
+@csrf_exempt
+def create_product_flutter2(request):
+    if request.method == 'POST':
+        form = json.loads(request.body)
+        form.instance.user = request.user
+        form.instance.is_valid = False
+        form.save()
+        return JsonResponse({"status": "aman"}, status = 200)
+    return JsonResponse({"instance": "Product ditambahkan"}, status = 200)

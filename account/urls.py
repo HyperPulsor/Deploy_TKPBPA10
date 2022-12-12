@@ -17,5 +17,8 @@ urlpatterns = [
     path('login_flutter/', views.login_flutter, name='login_flutter'),
     path('signup_flutter/', views.signup_flutter, name='signup_flutter'),
     path('logout_flutter/', views.logout_flutter, name='logout_flutter'),
-    path('user/', views.get_user, name='user')
+    path('user/', views.get_user, name='user'),
+    path('all_profile_json/', views.all_profile_json, name='all_profile_json'),
+    path('profile_json/', views.profile_json, name='profile_json'),
+    path('json/<username>', views.show_json_by_username, name='show_json_by_username'),
 ]
